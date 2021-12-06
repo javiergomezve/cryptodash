@@ -34,7 +34,7 @@ const News = ({ simplified }) => {
 
     if (isFetching) return <Loader />;
 
-    if (Object.keys(error).length > 0) {
+    if (error && Object.keys(error).length > 0) {
         return <p>Error loading data. Try again.</p>;
     }
 
