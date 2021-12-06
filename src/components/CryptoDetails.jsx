@@ -29,13 +29,17 @@ const CryptoDetails = () => {
 
     const [timePeriod, setTimePeriod] = useState('7d');
 
-    const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
+    const { data, isFetching, error } = useGetCryptoDetailsQuery(coinId);
     const { data: coinHistory } = useGetCryptoHistoryQuery({
         coinId,
         timePeriod,
     });
 
     if (isFetching) return <Loader />;
+
+    if (Object.keys(error).length > 0) {
+        return <p>Error loading data. Try again.</p>;
+    }
 
     const cryptoDetails = data?.data?.coin;
 
@@ -191,7 +195,7 @@ const CryptoDetails = () => {
                             <Title level={5} className="link-name">
                                 {link.type}
                             </Title>
-                            <a href={link.url} target="_blank" rel="norefered">
+                            <a href={link.url} target="_blank" rel="noreferrer">
                                 {link.name}
                             </a>
                         </Row>

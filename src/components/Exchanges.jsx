@@ -12,13 +12,17 @@ const { Text } = Typography;
 const Exchanges = () => {
     const [exchangesList, setExchangesList] = useState([]);
 
-    const { data, isFetching } = useGetExchangesQuery();
+    const { data, isFetching, error } = useGetExchangesQuery();
 
     useEffect(() => {
         setExchangesList(data?.data?.exchanges || []);
     }, [data]);
 
     if (isFetching) return <Loader />;
+
+    if (Object.keys(error).length > 0) {
+        return <p>Error loading data. Try again.</p>;
+    }
 
     return (
         <Fragment>

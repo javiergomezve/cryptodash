@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Typography, Row, Col, Statistic } from 'antd';
 import millify from 'millify';
@@ -9,10 +9,14 @@ import { Cryptocurrencies, News, Loader } from './index';
 const { Title } = Typography;
 
 const Home = () => {
-    const { data, isFetching } = useGetCryptosQuery(10);
+    const { data, isFetching, error } = useGetCryptosQuery(10);
     const globalStats = data?.data?.stats;
 
     if (isFetching) return <Loader />;
+
+    if (Object.keys(error).length > 0) {
+        return <p>Error loading data. Try again.</p>;
+    }
 
     return (
         <Fragment>
@@ -24,23 +28,23 @@ const Home = () => {
                 <Col span={12}>
                     <Statistic
                         title="Total Cryptocurrencies"
-                        value={globalStats.total}
+                        value={globalStats?.total}
                     />
                     <Statistic
                         title="Total Exchanges"
-                        value={millify(globalStats.totalExchanges)}
+                        value={millify(globalStats?.totalExchanges)}
                     />
                     <Statistic
                         title="Total Market Cap"
-                        value={millify(globalStats.totalMarketCap)}
+                        value={millify(globalStats?.totalMarketCap)}
                     />
                     <Statistic
                         title="Total 24h Volume"
-                        value={millify(globalStats.total24hVolume)}
+                        value={millify(globalStats?.total24hVolume)}
                     />
                     <Statistic
                         title="Total MArkets"
-                        value={millify(globalStats.totalMarkets)}
+                        value={millify(globalStats?.totalMarkets)}
                     />
                 </Col>
             </Row>

@@ -9,7 +9,7 @@ import { useGetCryptosQuery } from '../services/cryptoAPI';
 const Cryptocurrencies = ({ simplified }) => {
     const count = simplified ? 10 : 100;
 
-    const { data: cryptosList, isFetching } = useGetCryptosQuery(count);
+    const { data: cryptosList, isFetching, error } = useGetCryptosQuery(count);
 
     const [cryptos, setCryptos] = useState([]);
 
@@ -28,6 +28,10 @@ const Cryptocurrencies = ({ simplified }) => {
     }, [searchTerm]);
 
     if (isFetching) return <Loader />;
+
+    if (Object.keys(error).length > 0) {
+        return <p>Error loading data. Try again.</p>;
+    }
 
     return (
         <Fragment>
