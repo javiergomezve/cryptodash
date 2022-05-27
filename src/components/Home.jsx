@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Typography, Row, Col, Statistic } from 'antd';
 import millify from 'millify';
@@ -13,6 +13,13 @@ const Home = () => {
     const globalStats = data?.data?.stats;
 
     if (isFetching) return <Loader />;
+
+    if (!globalStats)
+        return (
+            <Fragment>
+                <Title level={12}>Something went wrong. Try again later.</Title>
+            </Fragment>
+        );
 
     return (
         <Fragment>
